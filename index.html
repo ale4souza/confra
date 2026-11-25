@@ -79,9 +79,9 @@ const LN=['Biel, volta aqui!','Só um beijinho, Biel!','Me paga um açaí?','Cad
 const HEL=[[2000,'Dê','shield','Pela fé! Leva o escudo!'],[5000,'Filipe','flash','Sorria! 📸'],[8000,'Marcelo','moto','Sobe na moto!'],[11500,'Dê','shield','Pela fé de novo!']];
 let r;
 return{
-init(){r={d:0,spd:6.5,gap:300,y:GY,vy:0,j:0,ob:[],co:[],hp:HEL.map(h=>({d:h[0],n:h[1],pw:h[2],s:h[3],u:0})),sh:0,moto:0,stun:0,next:700,score:0,fx:[],say:'Tudo bom e né?',sayT:140,hit:0}},
+init(){r={d:0,spd:6.5,gap:300,y:GY,vy:0,j:0,ob:[],co:[],hp:HEL.map(h=>({d:h[0],n:h[1],pw:h[2],s:h[3],u:0})),sh:0,moto:0,stun:0,next:700,score:0,fx:[],say:'Tudo bom?',sayT:140,hit:0}},
 upd(){
- if(pr(['ArrowUp','w',' ']) && r.j<2){r.vy=r.j===0?-14:-11;r.j++;if(r.j===1){r.say='Tudo bom e né?';r.sayT=50}}
+ if(pr(['ArrowUp','w',' ']) && r.j<2){r.vy=r.j===0?-14:-11;r.j++;if(r.j===1){r.say='Tudo bom?';r.sayT=50}}
  r.vy+=.85;r.y+=r.vy;if(r.y>=GY){r.y=GY;r.vy=0;r.j=0}
  r.spd=Math.min(8.5,6.5+r.d/7000);const sp=r.moto>0?11:r.spd*(r.stun>0?.6:1);r.d+=sp;
  if(r.moto>0)r.moto--;if(r.stun>0)r.stun--;if(r.hit>0)r.hit--;if(r.sayT>0)r.sayT--;
@@ -123,7 +123,7 @@ hud(){return['🏃 '+Math.round(100*r.d/GOAL)+'%','💰 '+r.score,'👭 distânc
 /* ===== FASE 2: LABIRINTO ===== */
 const g2=(()=>{const C=25,R=13,T=38,OX=25,OY=3;let m,p,en,ro,it,lives,sh,spd,inv,got;
 const ENM=[['Cara do pão','🧔','🥖','Agora você paga o pão com pernil!'],['Tênis Olímpico','😬','👟','Eu sou o tênis olímpico, não resiste!'],['Ruivo das flores','🧑‍🦰','🥀','Prometo que da próxima trago flores!']];
-const ITM=[['Amanda','life','Amanda: come um pãozinho! +1 vida 🍞'],['Veronica','shield','Veronica: leva o escudo! 🛡️'],['Mayara','speed','Mayara: docinho e moto! Turbo 🏍️']];
+const ITM=[['Amanda','life','Amanda: come um bolo de cenoura! +1 vida 🍞'],['Veronica','shield','Veronica: leva o escudo! 🛡️'],['Mayara','speed','Mayara: docinho e moto! Turbo 🏍️']];
 const cx=x=>OX+x*T+T/2,cy=y=>OY+y*T+T/2,tx=x=>Math.floor((x-OX)/T),ty=y=>Math.floor((y-OY)/T);
 const wall=(x,y)=>{const a=tx(x),b=ty(y);return a<0||b<0||a>=C||b>=R||m[b][a]===1};
 const hitW=(x,y)=>wall(x-10,y-10)||wall(x+10,y-10)||wall(x-10,y+10)||wall(x+10,y+10);
@@ -190,7 +190,7 @@ peek(){return{c:pp.find(p=>p.cul),d}},
 hud(){return['⏱️ '+Math.ceil(time/60)+'s','👃 '+cnt+'/'+(NM.length-1)+' cheirados','Segure E ou AÇÃO perto de alguém']}}})();
 
 /* ===== FASE 4: TESOURO ===== */
-const g4=(()=>{const FR=[['Alê','Fiquei sabendo onde está o tesouro!'],['Amanda','Cozinho muito bem, viu!'],['Veronica','Tá com fome? Eu cozinho!'],['Mayara','Docinho e moto, é comigo!'],['Marcelo','Violão, moto e bora!'],['Ingrid','Eu faço xixi na rua mesmo!'],['Daninha','Vai Galo! 🐓'],['Thayane','Fisioterapeuta na área!'],['Isa','Matemática é vida!'],['Leo','Gabriel Venancio no último!'],['Kamila','Minha farofa até carneiro come!'],['Filipe','Deixa eu tirar uma foto!'],['Dê','Pela fé!'],['Biel','Tudo bom e né?'],['Fran','Sentem aí pra ouvir!'],['Dudu','Foi você que usou o Dove?']];
+const g4=(()=>{const FR=[['Alê','Fiquei sabendo onde está o tesouro!'],['Amanda','Cozinho muito bem, viu!'],['Veronica','Tá com fome? Eu cozinho!'],['Mayara','Docinho é comigo!'],['Marcelo','Violão, roça e bora!'],['Ingrid','Eu faço xixi na rua mesmo!'],['Daninha','Vai Galo! 🐓'],['Thayane','Fisioterapeuta na área!'],['Isa','Matemática é vida!'],['Leo','Gabriel Venancio no último!'],['Kamila','Minha farofa até carneiro come!'],['Filipe','Deixa eu tirar uma foto!'],['Dê','Pela fé!'],['Biel','Tudo bom?'],['Fran','Sentem aí pra ouvir!'],['Dudu','Foi você que usou o Dove?']];
 const CO=8,RO=4,TX=100,TY=92,OXs=100,OYs=52;let cell,tr,shov,last,found,won,wt;
 return{
 init(){const a=[...Array(32).keys()].sort(()=>Math.random()-.5);tr=a[0];cell={};a.slice(1,5).forEach(i=>cell[i]={k:'S'});a.slice(5,21).forEach((i,j)=>cell[i]={k:'F',n:FR[j][0],q:FR[j][1]});for(let i=0;i<32;i++)if(!cell[i])cell[i]={k:i===tr?'T':'E'};
@@ -258,7 +258,7 @@ const GAMES=[
 {t:'👑 Fase 1: Biel e a Coroa Rica',cur:g1,intro:'<b>Corrida!</b> Biel corre sozinho atrás da Coroa Rica 💰 e as novinhas estão na cola dele! Pule (<b>Espaço</b>, ⬆️ ou toque na tela; dá pra pular duas vezes) para desviar dos obstáculos e pegar moedas. Os amigos aparecem no caminho: Dê (🙏 escudo), Filipe (📸 flash que cega todo mundo) e Marcelo (🏍️ moto que atropela tudo).',win:'Biel alcançou a Coroa Rica! 💰👑 As novinhas ficaram chorando na estrada.'},
 {t:'💙 Fase 2: Fran e o Zezé Perrella',cur:g2,intro:'<b>Labirinto!</b> Fran precisa chegar no Zezé Perrella, no canto do labirinto, mas antes tem que pegar <b>3 flores 🌹</b> (coisa que o ruivo nunca deu). Fuja do cara do pão com pernil, do tênis olímpico e do ruivo. Amanda (🍞 vida), Veronica (🛡️ escudo) e Mayara (🏍️ turbo) ajudam. Use as setas ou WASD.',win:'Fran chegou no Zezé Perrella! 💙 Fim do pão sem pagar, dos tênis olímpicos e do ruivo sem flores.'},
 {t:'🧴 Fase 3: Dudu e o Mistério do Dove',cur:g3,intro:'<b>Festa!</b> Ande com as setas até um suspeito e <b>segure E (ou Espaço)</b> para cheirar. O <b>cheirômetro</b> mostra se você está perto de quem usou o Dove, mas ele não fica parado! Você tem 2 minutos.',win:'Dudu descobriu: foi o <b>Leo</b> que usou o Dove! 🧴 (Leo, explica essa!)'},
-{t:'🚗 Fase 4: Kamila e o Pedágio do Eduardo',cur:gK,intro:'<b>Fuga de carro!</b> A Kamila descobriu que o Eduardo (Dudu) colocou ela no rateio do pedágio do carro dele: <i>"O queeeee?? Eduardo me colocou no rateio de pedágio do carro dele?"</i> Agora ela e o Leo, marido dela, estão fugindo de carro! Dirija com <b>⬅️ ➡️</b>, acelere com <b>⬆️</b>. Desvie dos carros, passe só pela <b>cancela livre ✅</b> dos pedágios, pegue 🎵 (Leo com Gabriel Venancio no último volume = turbo) e chegue ao final antes que o Dudu alcance vocês!',win:'Kamila e Leo escaparam! 🚗💨 O Eduardo vai ter que pagar o pedágio sozinho... ou tentar racha de novo.'},
+{t:'🚗 Fase 4: Kamila e o Pedágio do Eduardo',cur:gK,intro:'<b>Fuga de carro!</b> A Kamila descobriu que o dudu colocou ela no rateio do pedágio do carro dele: <i>"O queeeee?? Eduardo me colocou no rateio de pedágio do carro dele?"</i> Agora ela e o Leo, estão fugindo de carro! Dirija com <b>⬅️ ➡️</b>, acelere com <b>⬆️</b>. Desvie dos carros, passe só pela <b>cancela livre ✅</b> dos pedágios, pegue 🎵 (Leo com Gabriel Venancio no último volume = turbo) e chegue ao final antes que o Dudu alcance vocês!',win:'Kamila e Leo escaparam! 🚗💨 O Eduardo vai ter que pagar o pedágio sozinho... ou tentar racha de novo.'},
 {t:'🏴‍☠️ Fase 5: O Tesouro',cur:g4,intro:'<b>Mapa do tesouro!</b> Toque nos quadrados para cavar. Você tem 14 pás. Cada buraco mostra se está frio ou quente em relação ao tesouro. Pode aparecer algum amigo (que dá uma dica) ou um carneiro 🐑 atrás da farofa (que gasta mais uma pá). Ache o tesouro!',win:''}];
 function showIntro(i){gi=i;cur=GAMES[i].cur;state='menu';['menu','end'].forEach(x=>$(x).classList.add('hide'));$('intro').classList.remove('hide');$('it').textContent=GAMES[i].t;$('ip').innerHTML=GAMES[i].intro;$('play').focus()}
 function begin(){$('intro').classList.add('hide');$('end').classList.add('hide');toast=null;flashA=0;cur.init();state='play'}
